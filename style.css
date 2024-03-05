@@ -78,3 +78,77 @@ button.selected {
     text-align: center;
 }
 
+/* Existing styles, with minor adjustments */
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(145deg, #6e8efb, #a777e3);
+    font-family: Arial, sans-serif;
+}
+
+#quiz-container {
+    width: 450px;
+    padding: 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #fff;
+    position: relative;
+    padding-top: 40px; /* Adjusted */
+}
+
+#question-info {
+    margin-bottom: 20px;
+}
+
+/* New or updated styles */
+#navigation-buttons {
+    display: flex;
+    justify-content: space-between; /* This will align back to left and next to right */
+    margin-top: 20px;
+}
+
+#back-btn {
+    background-color: #2f2d2d; /* Red */
+    color: white;
+}
+
+#next-btn {
+    background-color: #2f2d2d; /* Green */
+    color: white;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.correct {
+    background-color: #4CAF50; /* Green */
+}
+
+.incorrect {
+    background-color: #f44336; /* Red */
+}
+
+button.selected {
+    border: 2px solid #fff;
+}
+
+#options button {
+    display: inline-block;
+    margin: 5px;
+}
