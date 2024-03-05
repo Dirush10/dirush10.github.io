@@ -251,3 +251,42 @@ button.selected {
 }
 
 
+.floating-svg {
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    animation: floatAnimation 5s infinite ease-in-out;
+}
+
+@keyframes floatAnimation {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    color:white;
+    font-family: 'Roboto', sans-serif;
+}
+
+.heart {
+    width: 35px;
+    height: 20px;
+    margin: 0 0px;
+    fill: red;
+    animation: beat .75s infinite alternate;
+}
+
+@keyframes beat {
+    from {
+        transform: scale(0.7);
+    }
+    to {
+        transform: scale(0.9);
+    }
+}

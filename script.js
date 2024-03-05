@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
        const quizData = [
     {
+        
         question: "Rutherford’s Model of the Atom: According to Rutherford's gold foil experiment, the nucleus of an atom is:",
         options: [
             "A) Negatively charged and located at the center of the atom",
