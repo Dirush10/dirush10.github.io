@@ -251,17 +251,6 @@ button.selected {
 }
 
 
-.floating-svg {
-    position: absolute;
-    top: 10%;
-    left: 5%;
-    animation: floatAnimation 5s infinite ease-in-out;
-}
-
-@keyframes floatAnimation {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
-}
 
 footer {
     position: fixed;
