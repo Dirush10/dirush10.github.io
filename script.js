@@ -480,7 +480,7 @@ document.addEventListener('DOMContentLoaded', () => {
             function showScore() {
                 const scorePercent = (correctAnswersCount / quizData.length) * 100;
                 let message = `Your score: ${correctAnswersCount} out of ${quizData.length} (${scorePercent.toFixed(2)}%)`;
-                if (scorePercent > 80) {
+                if (scorePercent > 69) {
                     message += "<br><br> Congrats!!! Proud of you!!";
                 }
                 scoreMessage.innerHTML = message;
