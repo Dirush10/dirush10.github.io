@@ -437,6 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const totalQuestionsElement = document.getElementById('total-questions');
             const scoreContainer = document.getElementById('score-container'); // Make sure this exists in your HTML
             const scoreMessage = document.getElementById('score-message'); // Make sure this exists in your HTML
+            const tryAgainButton = document.getElementById('try-again-btn'); // The Try Again button
         
             totalQuestionsElement.textContent = quizData.length.toString();
         
@@ -458,32 +459,44 @@ document.addEventListener('DOMContentLoaded', () => {
         
                 backButton.style.display = currentQuestionIndex > 0 ? 'block' : 'none';
                 nextButton.style.display = 'block';
+                scoreContainer.style.display = "none"; // Hide score container when showing a new question
             }
         
             function selectOption(option, index, button) {
-                if (answersSelected[currentQuestionIndex] === false) { // Check if the question was not previously answered correctly
+                if (!answersSelected[currentQuestionIndex]) {
                     if (option === quizData[currentQuestionIndex].correctAnswer) {
                         correctAnswersCount++;
-                        answersSelected[currentQuestionIndex] = true; // Mark as answered correctly
                         button.classList.add('correct');
+                        answersSelected[currentQuestionIndex] = true;
                     } else {
                         button.classList.add('incorrect');
-                        const correctIndex = quizData[currentQuestionIndex].options.indexOf(quizData[currentQuestionIndex].correctAnswer);
+                        const correctIndex = quizData[currentQuestionIndex].options.findIndex(opt => opt === quizData[currentQuestionIndex].correctAnswer);
                         optionsElement.children[correctIndex].classList.add('correct');
                     }
+                    optionsElement.childNodes.forEach(child => child.disabled = true); // Disable all buttons after selection
                 }
-                optionsElement.childNodes.forEach(child => child.disabled = true); // Disable all buttons after selection
             }
         
             function showScore() {
                 const scorePercent = (correctAnswersCount / quizData.length) * 100;
                 let message = `Your score: ${correctAnswersCount} out of ${quizData.length} (${scorePercent.toFixed(2)}%)`;
                 if (scorePercent > 80) {
-                    message += "<br><br>Proud of you, keep going. You're gonna rock!";
+                    message += "<br><br> Congrats!!! Proud of you!!";
                 }
                 scoreMessage.innerHTML = message;
                 scoreContainer.style.display = "block";
+                tryAgainButton.style.display = "block"; // Show the Try Again button
             }
+        
+            function resetQuiz() {
+                currentQuestionIndex = 0;
+                correctAnswersCount = 0;
+                answersSelected.fill(false);
+                updateQuestion(); // Show the first question again
+                scoreContainer.style.display = "none"; // Hide the score container
+            }
+        
+            tryAgainButton.addEventListener('click', resetQuiz);
         
             nextButton.addEventListener('click', () => {
                 if (currentQuestionIndex < quizData.length - 1) {
