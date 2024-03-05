@@ -426,85 +426,84 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
 
-    let currentQuestionIndex = 0;
-    let answersSelected = new Array(quizData.length).fill(null);
-    const questionElement = document.getElementById('question');
-    const optionsElement = document.getElementById('options');
-    const nextButton = document.getElementById('next-btn');
-    const backButton = document.getElementById('back-btn');
-    const questionNumberElement = document.getElementById('question-number');
-    const totalQuestionsElement = document.getElementById('total-questions');
-
-    totalQuestionsElement.textContent = quizData.length.toString();
-
-    backButton.style.display = 'none'; // Initially hide the back button
-
-    function clearOptions() {
-        optionsElement.innerHTML = '';
-    }
-
-    function updateQuestion() {
-        const question = quizData[currentQuestionIndex];
-        questionElement.textContent = question.question;
-        questionNumberElement.textContent = (currentQuestionIndex + 1).toString();
-        clearOptions();
-        question.options.forEach(option => {
-            const button = document.createElement('button');
-            button.textContent = option;
-            button.onclick = () => selectOption(option, button);
-            optionsElement.appendChild(button);
-        });
-
-        backButton.style.display = currentQuestionIndex > 0 ? 'block' : 'none';
-        nextButton.style.display = 'none'; // Ensure the Next button is hidden initially
-
-        // If an answer has already been selected for this question, show feedback immediately
-        if (answersSelected[currentQuestionIndex] !== null) {
-            showFeedback(answersSelected[currentQuestionIndex]);
-        }
-    }
-
-    function selectOption(option, button) {
-        answersSelected[currentQuestionIndex] = option; // Store the selected answer
-        showFeedback(button);
-    }
-
-    function showFeedback(selectedButton) {
-        const correctAnswer = quizData[currentQuestionIndex].correctAnswer;
-        clearOptions(); // Clear previous options for feedback display
-        quizData[currentQuestionIndex].options.forEach(option => {
-            const optionButton = document.createElement('button');
-            optionButton.textContent = option;
-            optionButton.disabled = true; // Disable the option buttons
-            if (option === correctAnswer) {
-                optionButton.classList.add('correct');
-            } else if (option === selectedButton.textContent && option !== correctAnswer) {
-                optionButton.classList.add('incorrect');
+            let currentQuestionIndex = 0;
+            let correctAnswersCount = 0;
+            let answersSelected = new Array(quizData.length).fill(false); // Tracks if a question was answered correctly
+            const questionElement = document.getElementById('question');
+            const optionsElement = document.getElementById('options');
+            const nextButton = document.getElementById('next-btn');
+            const backButton = document.getElementById('back-btn');
+            const questionNumberElement = document.getElementById('question-number');
+            const totalQuestionsElement = document.getElementById('total-questions');
+            const scoreContainer = document.getElementById('score-container'); // Make sure this exists in your HTML
+            const scoreMessage = document.getElementById('score-message'); // Make sure this exists in your HTML
+        
+            totalQuestionsElement.textContent = quizData.length.toString();
+        
+            function clearOptions() {
+                optionsElement.innerHTML = '';
             }
-            optionsElement.appendChild(optionButton);
+        
+            function updateQuestion() {
+                const question = quizData[currentQuestionIndex];
+                questionElement.textContent = question.question;
+                questionNumberElement.textContent = (currentQuestionIndex + 1).toString();
+                clearOptions();
+                question.options.forEach((option, index) => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.onclick = () => selectOption(option, index, button);
+                    optionsElement.appendChild(button);
+                });
+        
+                backButton.style.display = currentQuestionIndex > 0 ? 'block' : 'none';
+                nextButton.style.display = 'block';
+            }
+        
+            function selectOption(option, index, button) {
+                if (answersSelected[currentQuestionIndex] === false) { // Check if the question was not previously answered correctly
+                    if (option === quizData[currentQuestionIndex].correctAnswer) {
+                        correctAnswersCount++;
+                        answersSelected[currentQuestionIndex] = true; // Mark as answered correctly
+                        button.classList.add('correct');
+                    } else {
+                        button.classList.add('incorrect');
+                        const correctIndex = quizData[currentQuestionIndex].options.indexOf(quizData[currentQuestionIndex].correctAnswer);
+                        optionsElement.children[correctIndex].classList.add('correct');
+                    }
+                }
+                optionsElement.childNodes.forEach(child => child.disabled = true); // Disable all buttons after selection
+            }
+        
+            function showScore() {
+                const scorePercent = (correctAnswersCount / quizData.length) * 100;
+                let message = `Your score: ${correctAnswersCount} out of ${quizData.length} (${scorePercent.toFixed(2)}%)`;
+                if (scorePercent > 80) {
+                    message += "<br><br>Proud of you, keep going. You're gonna rock!";
+                }
+                scoreMessage.innerHTML = message;
+                scoreContainer.style.display = "block";
+            }
+        
+            nextButton.addEventListener('click', () => {
+                if (currentQuestionIndex < quizData.length - 1) {
+                    currentQuestionIndex++;
+                    updateQuestion();
+                } else {
+                    questionElement.textContent = "Quiz completed!";
+                    clearOptions();
+                    nextButton.style.display = 'none';
+                    backButton.style.display = 'none';
+                    showScore();
+                }
+            });
+        
+            backButton.addEventListener('click', () => {
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--;
+                    updateQuestion();
+                }
+            });
+        
+            updateQuestion(); // Initialize the first question
         });
-
-        nextButton.style.display = 'block'; // Show the Next button
-    }
-
-    nextButton.addEventListener('click', () => {
-        if (currentQuestionIndex < quizData.length - 1) {
-            currentQuestionIndex++;
-            updateQuestion();
-        } else {
-            questionElement.textContent = "Quiz completed!";
-            clearOptions();
-            nextButton.style.display = 'none';
-            backButton.style.display = 'none';
-        }
-    });
-
-    backButton.addEventListener('click', () => {
-        if (currentQuestionIndex > 0) {
-            currentQuestionIndex--;
-            updateQuestion();
-        }
-    });
-
-    updateQuestion(); // Initialize the first question
-});
