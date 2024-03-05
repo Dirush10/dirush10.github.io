@@ -1,0 +1,80 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(145deg, #6e8efb, #a777e3);
+    font-family: Arial, sans-serif;
+}
+
+#quiz-container {
+    width: 450px;
+    padding: 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #fff;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #6e8efb;
+    color: white;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #a777e3;
+}
+
+.correct {
+    background-color: #4CAF50; /* Green */
+}
+
+.incorrect {
+    background-color: #f44336; /* Red */
+}
+
+button.selected {
+    border: 2px solid #fff;
+}
+
+#back-btn {
+    display: none; /* Initially hidden */
+}
+
+#question-info {
+    margin-bottom: 20px;
+}
+
+#quiz-container {
+    position: relative;
+    padding-top: 40px; /* Provide space for the quiz-status */
+
+}
+
+#quiz-status {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 0.9em;
+    color: #fff;
+}
+
+#options button {
+    display: inline-block; /* Display options in a row */
+    margin: 5px;
+}
+
+#options {
+    text-align: center;
+}
+
