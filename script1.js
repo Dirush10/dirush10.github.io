@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
             physics: [
                 { name: "Dual Nature of Radiation and Matter & Atoms", url: "physics-ch1.html" },
                 { name: "Semi Conductors", url: "physics-ch2.html" },
+                { name: "Physics Formulas", url: "physics-formula.html" },
                 // Add more chapters as needed
             ],
             chemistry: [
