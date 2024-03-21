@@ -35,6 +35,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 { name: "Chapter 1: Atomic Structure", url: "chemistry-chapter1.html" },
                 // Add more chapters as needed
             ],
+            biology: [
+
+                {name: "Biology Reproduction", url:"biology-ch1.html"}
+            ]
             // Add more subjects and their chapters as needed
         };
         return chapters[subject] || [];
