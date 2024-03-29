@@ -12,9 +12,15 @@
   body {
     font-family: 'Open Sans', sans-serif;
     background-color: #f4f4f4;
+    color: #000;
+    transition: background-color 0.5s, color 0.5s;
     margin: 0;
     padding: 10px;
     font-size: 12px;
+  }
+  .dark-mode {
+    background-color: #121212;
+    color: #ffffff;
   }
   .container {
     background-color: #fff;
@@ -24,6 +30,15 @@
     overflow-y: auto;
     height: 90vh;
   }
+  .dark-mode .container {
+    background-color: #333;
+    color: #FFF;
+  }
+ .dark-mode h2 {
+    background-color: #333;
+    color: #FFF;
+  }
+
   h2 {
     font-weight: 400;
     color: #333;
@@ -79,9 +94,41 @@
   .checklist input[type="checkbox"]:checked + span {
     color: #999;
   }
+  .mode-toggle {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+  @keyframes beat {
+    0%, 100% {
+      transform: scale(0.9);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+  }
+  footer svg {
+    animation: beat 1s infinite;
+  }
 </style>
 </head>
 <body>
+
+<div class="mode-toggle" onclick="toggleDarkMode()">
+  <!-- Sun icon by default -->
+  <svg id="toggleIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun" width="24" height="24">
+    <circle cx="12" cy="12" r="5"></circle>
+    <line x1="12" y1="1" x2="12" y2="3"></line>
+    <line x1="12" y1="21" x2="12" y2="23"></line>
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+    <line x1="1" y1="12" x2="3" y2="12"></line>
+    <line x1="21" y1="12" x2="23" y2="12"></line>
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+  </svg>
+</div>
 
 <div class="container">
   <h2>Chemistry Study Checklist</h2>
@@ -223,6 +270,37 @@ const topics = [
   'Differential and Integral Forms of Rate Laws',
   'Zero and First-Order Reactions',
 ];
+
+let darkMode = localStorage.getItem('darkMode');
+
+const enableDarkMode = () => {
+  document.body.classList.add('dark-mode');
+  document.querySelector('.container').classList.add('dark-mode');
+  localStorage.setItem('darkMode', 'enabled');
+  document.getElementById('toggleIcon').innerHTML = '<circle cx="12" cy="12" r="5"></circle>';
+};
+
+const disableDarkMode = () => {
+  document.body.classList.remove('dark-mode');
+  document.querySelector('.container').classList.remove('dark-mode');
+  localStorage.setItem('darkMode', null);
+  document.getElementById('toggleIcon').innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+};
+
+if (darkMode === 'enabled') {
+  enableDarkMode();
+}
+
+document.querySelector('.mode-toggle').addEventListener('click', () => {
+  darkMode = localStorage.getItem('darkMode');
+  if (darkMode !== 'enabled') {
+    enableDarkMode();
+  } else {
+    disableDarkMode();
+  }
+});
+
+// Load the checklist function
 
 
 // Function to load the checklist from local storage
