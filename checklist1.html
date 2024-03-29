@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chemistry Study Checklist</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  @page {
+    size: landscape;
+  }
+  body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 10px;
+    font-size: 12px;
+  }
+  .container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 10px;
+    overflow-y: auto;
+    height: 90vh;
+  }
+  h2 {
+    font-weight: 400;
+    color: #333;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  .checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    column-count: 3; 
+  }
+  .checklist li {
+    break-inside: avoid-column;
+    margin: 5px 0;
+    padding: 5px;
+    border: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+  .checklist li.checked {
+    border-color: #5cb85c;
+  }
+  .checklist label {
+    display: flex;
+    align-items: center;
+  }
+  .checklist input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    height: 18px;
+    width: 18px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .checklist input[type="checkbox"]:checked {
+    background-color: #5cb85c;
+    border-color: #5cb85c;
+  }
+  .checklist input[type="checkbox"]:checked:after {
+    content: '✔';
+    position: absolute;
+    top: 0;
+    left: 4px;
+    color: white;
+    font-size: 14px;
+  }
+  .checklist label span {
+    transition: color 0.3s;
+  }
+  .checklist input[type="checkbox"]:checked + span {
+    color: #999;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Chemistry Study Checklist</h2>
+  <ul class="checklist" id="checklist">
+    <!-- JavaScript will insert list items here -->
+  </ul>
+</div>
+
+<script>
+
+// Array of topics
+const topics = [
+  'Kossel - Lewis Approach to Chemical Bond Formation',
+  'Concept of Ionic and Covalent Bonds',
+  'Formation of Ionic Bonds',
+  'Factors Affecting the Formation of Ionic Bonds',
+  'Calculation of Lattice Enthalpy',
+  'Concept of Electronegativity',
+  'Fajan\'s Rule',
+  'Dipole Moment',
+  'Valence Shell Electron Pair Repulsion (VSEPR) Theory',
+  'Shapes of Simple Molecules',
+  'Quantum Mechanical Approach to Covalent Bonding',
+  'Valence Bond Theory',
+  'Hybridization (s, p, and d orbitals)',
+  'Resonance',
+  'Molecular Orbital Theory',
+  'LCAOs',
+  'Sigma and Pi Bonds',
+  'Molecular Orbital Electronic Configurations',
+  'Bond Order',
+  'Bond Length',
+  'Bond Energy',
+  'Elementary Idea of Metallic Bonding',
+  'Hydrogen Bonding and its Applications',
+  'Fundamentals of Thermodynamics',
+  'System and Surroundings',
+  'Extensive and Intensive Properties',
+  'Types of Processes',
+  'The First Law of Thermodynamics',
+  'Concept of Work',
+  'Heat',
+  'Internal Energy and Enthalpy',
+  'Heat Capacity',
+  'Molar Heat Capacity',
+  'Hess\'s Law of Constant Heat Summation',
+  'Enthalpies of Bond Dissociation',
+  'Combustion',
+  'Formation',
+  'Atomization',
+  'Sublimation',
+  'Phase Transition',
+  'Hydration',
+  'Ionization',
+  'Solution',
+  'The Second Law of Thermodynamics',
+  'Spontaneity of Processes',
+  'Entropy (∆S) of the Universe',
+  'Gibbs Energy (∆G) of the System',
+  'Standard Gibbs Energy Change (∆G°)',
+  'Equilibrium Constant',
+  'Methods for Expressing Concentration of Solution',
+  'Molality',
+  'Molarity',
+  'Mole Fraction',
+  'Percentage (Volume and Mass)',
+  'Vapour Pressure of Solutions',
+  'Raoult\'s Law',
+  'Ideal and Non-Ideal Solutions',
+  'Vapour Pressure - Composition Plots',
+  'Colligative Properties of Dilute Solutions',
+  'Relative Lowering of Vapour Pressure',
+  'Depression of Freezing Point',
+  'Elevation of Boiling Point',
+  'Osmotic Pressure',
+  'Determination of Molecular Mass Using Colligative Properties',
+  'Abnormal Value of Molar Mass',
+  'Van\'t Hoff Factor and its Significance',
+  'Meaning of Equilibrium',
+  'Dynamic Equilibrium Concept',
+  'Equilibria Involving Physical Processes',
+  'Solid-Liquid',
+  'Liquid-Gas',
+  'Solid-Gas Equilibria',
+  'Henry\'s Law',
+  'Equilibria Involving Chemical Processes',
+  'Law of Chemical Equilibrium',
+  'Equilibrium Constants (Kp and Kc)',
+  'Significance of ∆G and ∆G° in Chemical Equilibrium',
+  'Factors Affecting Equilibrium Concentration, Pressure, Temperature',
+  'Effect of Catalyst',
+  'Le Chatelier\'s Principle',
+  'Ionic Equilibrium',
+  'Weak and Strong Electrolytes',
+  'Ionization of Electrolytes',
+  'Acid-Base Equilibria (Arrhenius, Brønsted-Lowry, and Lewis)',
+  'Multistage Ionization',
+  'Ionization Constants',
+  'Acid-Base Scale',
+  'Common Ion Effect',
+  'Hydrolysis of Salts',
+  'pH of Solutions',
+  'Solubility of Sparingly Soluble Salts',
+  'Buffer Solutions',
+  'Electronic Concepts of Oxidation and Reduction',
+  'Redox Reactions',
+  'Oxidation Number',
+  'Rules for Assigning Oxidation Number',
+  'Balancing of Redox Reactions',
+  'Electrolytic and Metallic Conduction',
+  'Conductance in Electrolytic Solutions',
+  'Variation with Concentration',
+  'Kohlrausch\'s Law',
+  'Electrochemical Cells',
+  'Electrolytic Cells',
+  'Galvanic Cells',
+  'Types of Electrodes',
+  'Electrode Potentials',
+  'Standard Electrode Potential',
+  'Cell Reactions',
+  'Electromotive Force (EMF) of a Galvanic Cell',
+  'Nernst Equation',
+  'Applications',
+  'Relationship Between Cell Potential and Gibbs\' Energy Change',
+  'Dry Cell',
+  'Lead Accumulator',
+  'Fuel Cells',
+  'Rate of a Chemical Reaction',
+  'Factors Affecting the Rate of Reaction',
+  'Concentration',
+  'Temperature',
+  'Pressure',
+  'Catalyst',
+  'Elementary and Complex Reactions',
+  'Order and Molecularity of Reactions',
+  'Rate Law',
+  'Rate Constant',
+  'Units of Rate Constant',
+  'Differential and Integral Forms of Rate Laws',
+  'Zero and First-Order Reactions',
+];
+
+
+// Function to load the checklist from local storage
+function loadChecklist() {
+  const checklistUl = document.querySelector('.checklist');
+  checklistUl.innerHTML = ''; // Clear the list
+
+  topics.forEach((topic, index) => {
+    const isChecked = localStorage.getItem(topic) === 'true';
+    const li = document.createElement('li');
+    const label = document.createElement('label');
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.checked = isChecked;
+    input.id = 'topic-' + index;
+    input.dataset.topic = topic;
+    input.addEventListener('change', () => saveChecklist(topic, input.checked));
+
+    const span = document.createElement('span');
+    span.textContent = topic;
+
+    label.appendChild(input);
+    label.appendChild(span);
+    li.appendChild(label);
+    checklistUl.appendChild(li);
+  });
+}
+
+// Function to save the checklist to local storage
+function saveChecklist(topic, isChecked) {
+  localStorage.setItem(topic, isChecked);
+}
+
+// Load the checklist when the page loads
+window.addEventListener('DOMContentLoaded', loadChecklist);
+</script>
+<footer style="text-align: center; padding: 20px;">
+    <svg width="28px" height="28px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#FF0000">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+    </svg>
+  </footer>
+  
+  <style>
+    @keyframes beat {
+      0%, 100% {
+        transform: scale(0.9);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+    }
+    footer svg {
+      animation: beat 1s infinite;
+    }
+  </style>
+</body>
+</html>
