@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organic Chemistry Study Checklist</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  @page {
+    size: landscape;
+  }
+  body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f4f4f4;
+    color: #000;
+    transition: background-color 0.5s, color 0.5s;
+    margin: 0;
+    padding: 10px;
+    font-size: 12px;
+  }
+  .dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+  }
+  .container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 10px;
+    overflow-y: auto;
+    height: 90vh;
+  }
+  .dark-mode .container {
+    background-color: #333;
+    color: #FFF;
+  }
+ .dark-mode h2 {
+    background-color: #333;
+    color: #FFF;
+  }
+
+  h2 {
+    font-weight: 400;
+    color: #333;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  .checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    column-count: 3; 
+  }
+  .checklist li {
+    break-inside: avoid-column;
+    margin: 5px 0;
+    padding: 5px;
+    border: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+  .checklist li.checked {
+    border-color: #5cb85c;
+  }
+  .checklist label {
+    display: flex;
+    align-items: center;
+  }
+  .checklist input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    height: 18px;
+    width: 18px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .checklist input[type="checkbox"]:checked {
+    background-color: #5cb85c;
+    border-color: #5cb85c;
+  }
+  .checklist input[type="checkbox"]:checked:after {
+    content: '✔';
+    position: absolute;
+    top: 0;
+    left: 4px;
+    color: white;
+    font-size: 14px;
+  }
+  .checklist label span {
+    transition: color 0.3s;
+  }
+  .checklist input[type="checkbox"]:checked + span {
+    color: #999;
+  }
+  .mode-toggle {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+  @keyframes beat {
+    0%, 100% {
+      transform: scale(0.9);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+  }
+  footer svg {
+    animation: beat 1s infinite;
+  }
+</style>
+</head>
+<body>
+
+<div class="mode-toggle" onclick="toggleDarkMode()">
+  <!-- Sun icon by default -->
+  <svg id="toggleIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun" width="24" height="24">
+    <circle cx="12" cy="12" r="5"></circle>
+    <line x1="12" y1="1" x2="12" y2="3"></line>
+    <line x1="12" y1="21" x2="12" y2="23"></line>
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+    <line x1="1" y1="12" x2="3" y2="12"></line>
+    <line x1="21" y1="12" x2="23" y2="12"></line>
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+  </svg>
+</div>
+
+<div class="container">
+  <h2> Organic Chemistry Study Checklist</h2>
+  <ul class="checklist" id="checklist">
+    <!-- JavaScript will insert list items here -->
+  </ul>
+</div>
+
+<script>
+
+// Array of topics
+const topics = [
+  {
+    unit: "Unit XIII: Purification and Characterisation of Organic Compounds",
+    topics: [
+      "Purification: - Crystallization", "Sublimation", "Distillation", "Differential extraction", "Chromatography - principles and their applications.",
+      "Qualitative analysis - Detection of nitrogen, sulphur, phosphorus and halogens.",
+      "Quantitative analysis (basic principles only) - Estimation of carbon, hydrogen, nitrogen, halogens, sulphur, phosphorus.",
+      "Calculations of empirical formulae and molecular formulae: Numerical problems in organic quantitative analysis."
+    ]
+  },
+  {
+    unit: "Unit XIV: Some Basic Principles of Organic Chemistry",
+    topics: [
+      "Tetravalency of carbon: Shapes of simple molecules - hybridization (s and p).",
+      "Classification of organic compounds based on functional groups; and those containing halogens, oxygen, nitrogen and sulphur", "Homologous series: Isomerism - structural and stereoisomerism.",
+      "Nomenclature (Trivial and IUPAC).",
+      "Covalent bond fission - Homolytic and heterolytic: free radicals, carbocations, and carbanions" ,"Stability of carbocations and free radicals, electrophiles, and nucleophiles.",
+      "Electronic displacement in a covalent bond: ","Inductive effect", "Electromeric effect"," Resonance and hyperconjugation.",
+      "Common types of organic reactions- Substitution, addition, elimination, and rearrangement."
+    ]
+  },
+  {
+    unit: "Unit XV: Hydrocarbons",
+    topics: [
+      "Classification","Isomerism", "IUPAC nomenclature", "General methods of preparation, properties, and reactions.",
+      "Alkanes - Conformations: Sawhorse and Newman projections (of ethane)"," Mechanism of halogenation of alkanes.",
+      "Alkenes - Geometrical isomerism: Mechanism of electrophilic addition:","Addition of hydrogen, halogens, water, hydrogen halides (Markownikoff's and peroxide effect)", "Ozonolysis and polymerization.",
+      "Alkynes - Acidic character: Addition of hydrogen, halogens, water, and hydrogen halides", "Polymerization.",
+      "Aromatic hydrocarbons - Nomenclature, benzene - structure and aromaticity", "Mechanism of electrophilic substitution.",
+      "Friedel - Craft's alkylation and acylation","Directive influence of the functional group in mono-substituted benzene"
+    ]
+  },
+  {
+    unit: "Unit XVI: Organic Compounds Containing Halogen",
+    topics: [
+      "General methods of preparation, properties, and reactions", "Nature of C-X bond", "Mechanisms of substitution reactions.",
+      "Uses: Environmental effects of chloroform, iodoform, freons, and DDT."
+    ]
+  },
+  {
+    unit: "Unit XVII: Organic Compounds Containing Oxygen",
+    topics: [
+      "General methods of preparation, properties, reactions, and uses.",
+      "Alcohols, Phenols and Ethers","Alcohols: Identification of primary, secondary, and tertiary alcohols", "Mechanism of dehydration.",
+      "Phenols: Acidic nature", "Electrophilic substitution reactions", "Halogenation,", "Nitration and sulphonation" ,"Reimer - Tiemann reaction.",
+      "Ethers: Structure.",
+      "Aldehyde and Ketones: Nature of carbonyl group", "Nucleophilic addition to >C=O group"," Relative reactivities of aldehydes and ketones.",
+      "Important reactions such as - Nucleophilic addition reactions (addition of HCN, NH3 and its derivatives)", "Grignard reagent; oxidation; reduction (Wolff Kishner and Clemmensen)","The acidity of α-hydrogen"," Aldol condensation"," Cannizzaro reaction", "Haloform reaction", "Chemical tests to distinguish between aldehydes and Ketones.",
+      "Carboxylic Acids",
+      "Acidic Strenght and factors affecting it"
+    ]
+  },
+  {
+    unit: "Unit XVIII: Organic Compounds Containing Nitrogen",
+    topics: [
+      "General methods of preparation, Properties, reactions, and uses.",
+      "Amines: Nomenclature, classification, structure, basic character and identification of primary, secondary, and tertiary amines and their basic character.",
+      "Diazonium Salts: Importance in Synthetic Organic Chemistry."
+    ]
+  },
+  {
+    unit: "Unit XIX: Biomolecules",
+    topics: [
+      "CARBOHYDRATES - Classification; aldoses and ketoses; monosaccharides (glucose and fructose) and constituent monosaccharides of oligosaccharides (sucrose, lactose, and maltose).",
+      "PROTEINS - Elementary Idea of α-amino acids, peptide bond, polypeptides:","Proteins: primary, secondary, tertiary, and quaternary structure (qualitative idea only), denaturation of proteins, enzymes.",
+      "VITAMINS - Classification and functions.",
+      "NUCLEIC ACIDS - Chemical constitution of DNA and RNA",
+      " Biological functions of nucleic acids.",
+      "Hormones (General Introduction)."
+    ]
+  },
+  {
+    unit: "Unit XX: Principles Related to Practical Chemistry",
+    topics: [
+      "Detection of extra elements (Nitrogen, sulphur, halogens) in organic compounds;"," Detection of the following functional groups: hydroxyl (alcoholic and phenolic), carbonyl (aldehyde and ketones), carboxyl, and amino groups in organic compounds.",
+      "The chemistry involved in the preparation of the following:"," Inorganic compounds (Mohr's salt, potash alum)"," Organic compounds (Acetanilide, p-nitroacetanilide, aniline yellow, iodoform).",
+      "The chemistry involved in the titrimetric exercises - Acids, bases and the use of indicators, oxalic-acid vs KMnO4, Mohr's salt vs KMnO4.",
+      "Chemical principles involved in the qualitative salt analysis"," Cations - Pb?+. Cu?*. Al*, Fe'*, Zn?*, Ni?*, Ca?*, Ba?*, Mg?*, NH, " ,"Anions- CO?, , S7:50%-. NO3., NOZ, CI, Br, I ( Insoluble salts excluded).",
+      "Chemical principles involved in the following experiments:", "Enthalpy of solution of CuSO4", "Enthalpy of neutralization of strong acid and strong base", "Preparation of lyophilic and lyophobic sols", "Kinetic study of the reaction of iodide ions with hydrogen peroxide at room temperature."
+    ]
+  }
+];
+
+
+
+let darkMode = localStorage.getItem('darkMode');
+
+const enableDarkMode = () => {
+  document.body.classList.add('dark-mode');
+  document.querySelector('.container').classList.add('dark-mode');
+  localStorage.setItem('darkMode', 'enabled');
+  document.getElementById('toggleIcon').innerHTML = '<circle cx="12" cy="12" r="5"></circle>';
+};
+
+const disableDarkMode = () => {
+  document.body.classList.remove('dark-mode');
+  document.querySelector('.container').classList.remove('dark-mode');
+  localStorage.setItem('darkMode', null);
+  document.getElementById('toggleIcon').innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+};
+
+if (darkMode === 'enabled') {
+  enableDarkMode();
+}
+
+document.querySelector('.mode-toggle').addEventListener('click', () => {
+  darkMode = localStorage.getItem('darkMode');
+  if (darkMode !== 'enabled') {
+    enableDarkMode();
+  } else {
+    disableDarkMode();
+  }
+});
+
+// Load the checklist function
+
+
+// Function to load the checklist from local storage
+function loadChecklist() {
+  const checklistUl = document.querySelector('.checklist');
+  checklistUl.innerHTML = ''; // Clear the list
+
+  topics.forEach((unit, unitIndex) => {
+    // Create and append the unit title in bold
+    const unitTitle = document.createElement('li');
+    unitTitle.style.fontWeight = 'bold';
+    unitTitle.textContent = unit.unit;
+    checklistUl.appendChild(unitTitle);
+
+    unit.topics.forEach((topic, topicIndex) => {
+      // Create a checklist item for each topic
+      const topicItem = document.createElement('li');
+      const label = document.createElement('label');
+      const input = document.createElement('input');
+      input.type = 'checkbox';
+      input.id = `topic-${unitIndex}-${topicIndex}`;
+      // Check if the topic is saved as checked in localStorage
+      input.checked = localStorage.getItem(input.id) === 'true';
+
+      input.addEventListener('change', () => {
+        // Save the checked state of the topic in localStorage
+        localStorage.setItem(input.id, input.checked);
+      });
+
+      const span = document.createElement('span');
+      span.textContent = topic;
+      span.style.marginLeft = '10px'; // Add space between checkbox and text
+
+      label.appendChild(input);
+      label.appendChild(span);
+      topicItem.appendChild(label);
+      checklistUl.appendChild(topicItem);
+    });
+  });
+}
+
+// Function to save the checklist to local storage
+function saveChecklist(topic, isChecked) {
+  localStorage.setItem(topic, isChecked);
+}
+
+// Load the checklist when the page loads
+window.addEventListener('DOMContentLoaded', loadChecklist);
+</script>
+<footer style="text-align: center; padding: 20px;">
+    <svg width="28px" height="28px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#FF0000">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+    </svg>
+  </footer>
+  
+  <style>
+    @keyframes beat {
+      0%, 100% {
+        transform: scale(0.9);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+    }
+    footer svg {
+      animation: beat 1s infinite;
+    }
+  </style>
+</body>
+</html>
