@@ -127,6 +127,33 @@
   footer svg {
     animation: beat 1s infinite;
   }
+ 
+.header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1em; /* Spacing on the sides */
+}
+
+h2 {
+    margin: 0; /* Reset margin */
+}
+
+#resetButton {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    margin-left: 1em; /* Spacing between the title and button */
+}
+#broomIcon {
+  fill: #646464; /* Default color for the broom icon */
+  transition: fill 0.4s ease;
+}
+
+.dark-mode #broomIcon {
+  fill: white; /* White color for the broom icon in dark mode */
+}
+
 </style>
 </head>
 <body>
@@ -147,11 +174,19 @@
 </div>
 
 <div class="container" id="confetti-container">
+    <div class="header-container">
+        <h2>Organic Chemistry Study Checklist</h2>
+        <button id="resetButton" title="Reset Checklist">
+            <!-- Broomstick SVG icon -->
+            <svg id="broomIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20" height="20">
+                <path d="M462.2 0c-5.9 0-11.5 3.3-14.1 8.8L2.2 442.8c-4.6 9.8.9 21.6 11.8 21.6H160v48c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-48h136c10 0 16.4-11.8 11.8-21.6L304 190.3l35.9-76.5-32.2-32.2c-9.5-9.5-9.5-25 0-34.5s25-9.5 34.5 0l32.2 32.2L462 9.8c2.6-5.5 8.3-8.8 14.2-8.8 10.5 0 19 8.5 19 19s-8.5 19-19 19c-5.9 0-11.5-3.3-14.1-8.8L355.1 172.7l-32.2-32.2c-9.5-9.5-9.5-25 0-34.5s25-9.5 34.5 0l32.2 32.2 112.6-239.9C473.7 3.3 468.1 0 462.2 0z"/>
+              </svg>
+        </button>
+    </div>
     <canvas id="confetti-canvas"></canvas>
-  <h2> Organic Chemistry Study Checklist</h2>
-  <ul class="checklist" id="checklist">
-    <!-- JavaScript will insert list items here -->
-  </ul>
+    <ul class="checklist" id="checklist">
+        <!-- Checklist items will be here -->
+    </ul>
 </div>
 <script>
 
@@ -341,6 +376,16 @@ document.querySelectorAll('.checklist input[type="checkbox"]').forEach(function(
 
 // Load the checklist when the page loads
 window.addEventListener('DOMContentLoaded', loadChecklist);
+</script>
+<script>
+document.getElementById('resetButton').addEventListener('click', function() {
+    const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+        localStorage.setItem(checkbox.id, false); // Update localStorage if you're using it
+    });
+});
+
 </script>
 <script src ="confetti.js"></script>
 <footer style="text-align: center; padding: 20px;">
