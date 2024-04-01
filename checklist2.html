@@ -302,9 +302,7 @@ function loadChecklist() {
     });
       input.addEventListener('change', () => {
         // Save the checked state of the topic in localStorage
-        localStorage.setItem(input.id, input.checked);
-        
-      
+        localStorage.setItem(input.id, input.checked); 
       });
 
       const span = document.createElement('span');
