@@ -100,6 +100,20 @@
     right: 10px;
     cursor: pointer;
   }
+  #confetti-container {
+  position: relative;
+}
+
+#confetti-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2; /* Ensure it's above other content but below interactive elements if any */
+}
+
   @keyframes beat {
     0%, 100% {
       transform: scale(0.9);
@@ -130,13 +144,13 @@
   </svg>
 </div>
 
-<div class="container">
+<div class="container" id="confetti-container">
+    <canvas id="confetti-canvas"></canvas>
   <h2> Organic Chemistry Study Checklist</h2>
   <ul class="checklist" id="checklist">
     <!-- JavaScript will insert list items here -->
   </ul>
 </div>
-
 <script>
 
 // Array of topics
@@ -183,7 +197,7 @@ const topics = [
     unit: "Unit XVII: Organic Compounds Containing Oxygen",
     topics: [
       "General methods of preparation, properties, reactions, and uses.",
-      "Alcohols, Phenols and Ethers","Alcohols: Identification of primary, secondary, and tertiary alcohols", "Mechanism of dehydration.",
+      "<strong>Alcohols, Phenols and Ethers</strong>","<strong>Alcohols:</strong> Identification of primary, secondary, and tertiary alcohols", "Mechanism of dehydration.",
       "Phenols: Acidic nature", "Electrophilic substitution reactions", "Halogenation,", "Nitration and sulphonation" ,"Reimer - Tiemann reaction.",
       "Ethers: Structure.",
       "Aldehyde and Ketones: Nature of carbonyl group", "Nucleophilic addition to >C=O group"," Relative reactivities of aldehydes and ketones.",
@@ -278,10 +292,17 @@ function loadChecklist() {
       input.id = `topic-${unitIndex}-${topicIndex}`;
       // Check if the topic is saved as checked in localStorage
       input.checked = localStorage.getItem(input.id) === 'true';
-
+      document.querySelectorAll('.checklist input[type="checkbox"]').forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            // Check if all checkboxes are selected
+            checkAllSelected();
+        });
+    });
       input.addEventListener('change', () => {
         // Save the checked state of the topic in localStorage
         localStorage.setItem(input.id, input.checked);
+        
+      
       });
 
       const span = document.createElement('span');
@@ -300,10 +321,28 @@ function loadChecklist() {
 function saveChecklist(topic, isChecked) {
   localStorage.setItem(topic, isChecked);
 }
+function checkAllSelected() {
+    const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
+    const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+
+    if (allChecked) {
+        // Trigger confetti if all checkboxes are checked
+        startConfetti();
+        setTimeout(() => {
+            stopConfetti();
+            // removeConfetti(); // Uncomment if you want to immediately clear confetti
+        }, 10000); // Adjust timing as needed
+    }
+}
+document.querySelectorAll('.checklist input[type="checkbox"]').forEach(function(checkbox) {
+    checkbox.addEventListener('change', checkAllSelected);
+});
+
 
 // Load the checklist when the page loads
 window.addEventListener('DOMContentLoaded', loadChecklist);
 </script>
+<script src ="confetti.js"></script>
 <footer style="text-align: center; padding: 20px;">
     <svg width="28px" height="28px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#FF0000">
       <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
@@ -323,5 +362,7 @@ window.addEventListener('DOMContentLoaded', loadChecklist);
       animation: beat 1s infinite;
     }
   </style>
+
+  
 </body>
 </html>
