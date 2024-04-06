@@ -29,16 +29,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 { name: "Dual Nature of Radiation and Matter & Atoms", url: "physics-ch1.html" },
                 { name: "Semi Conductors", url: "physics-ch2.html" },
                 { name: "Physics Formulas 1", url:"physics-formula.html" },
-                { name: "Physics Formulas 2",url:"physics-formula2.html"},
+                { name: "Physics Formulas 2",url:"physics-formula2.html"}
                 // Add more chapters as needed
             ],
             chemistry: [
-                { name: "Chapter 1: Atomic Structure", url: "chemistry-chapter1.html" },
+                { name: "Chapter 1: Atomic Structure", url: "chemistry-chapter1.html" }
                 // Add more chapters as needed
             ],
             biology: [
 
-                {name: "Biology Reproduction", url:"biology-ch1.html"},
+                {name: "Biology Reproduction", url:"biology-ch1.html"}
             ]
             // Add more subjects and their chapters as needed
         };
